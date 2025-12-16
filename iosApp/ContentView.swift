@@ -1,21 +1,17 @@
-//
-//  ContentView.swift
-//  iosApp
-//
-//  Created by Mahmudul Karim Lincoln on 15/12/25.
-//
-
 import SwiftUI
 
 struct ContentView: View {
+
+    @StateObject private var vm = AuthViewModel()
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            if vm.isLoggedIn {
+                HomeView()
+            } else {
+                LoginView(vm: vm)
+            }
         }
-        .padding()
     }
 }
 
