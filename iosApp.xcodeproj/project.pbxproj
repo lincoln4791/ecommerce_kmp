@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A51DB722EF29A9F00014350 /* sharedKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A51DB6D2EF29A4900014350 /* sharedKit.xcframework */; };
+		8A51DB732EF29A9F00014350 /* sharedKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8A51DB6D2EF29A4900014350 /* sharedKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8AA64C292EF03A75003B26D2 /* KmpFix.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8AA64C282EF03A75003B26D2 /* KmpFix.xcconfig */; };
 /* End PBXBuildFile section */
 
@@ -27,7 +29,23 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		8A51DB742EF29A9F00014350 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8A51DB732EF29A9F00014350 /* sharedKit.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		8A51DB6D2EF29A4900014350 /* sharedKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = sharedKit.xcframework; sourceTree = "<group>"; };
+		8A51DB6F2EF29A4900014350 /* sharedKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = sharedKit.xcframework; sourceTree = "<group>"; };
 		8AA64BEF2EF02BD1003B26D2 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AA64BFD2EF02BD2003B26D2 /* iosAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AA64C072EF02BD2003B26D2 /* iosAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iosAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A51DB722EF29A9F00014350 /* sharedKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,6 +96,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8A51DB6C2EF29A4900014350 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8A51DB712EF29A4900014350 /* XCFrameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8A51DB6E2EF29A4900014350 /* debug */ = {
+			isa = PBXGroup;
+			children = (
+				8A51DB6D2EF29A4900014350 /* sharedKit.xcframework */,
+			);
+			path = debug;
+			sourceTree = "<group>";
+		};
+		8A51DB702EF29A4900014350 /* release */ = {
+			isa = PBXGroup;
+			children = (
+				8A51DB6F2EF29A4900014350 /* sharedKit.xcframework */,
+			);
+			path = release;
+			sourceTree = "<group>";
+		};
+		8A51DB712EF29A4900014350 /* XCFrameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8A51DB6E2EF29A4900014350 /* debug */,
+				8A51DB702EF29A4900014350 /* release */,
+			);
+			name = XCFrameworks;
+			path = ../shared/build/XCFrameworks;
+			sourceTree = "<group>";
+		};
 		8AA64BE62EF02BD1003B26D2 = {
 			isa = PBXGroup;
 			children = (
@@ -84,6 +137,7 @@
 				8AA64BF12EF02BD1003B26D2 /* iosApp */,
 				8AA64C002EF02BD2003B26D2 /* iosAppTests */,
 				8AA64C0A2EF02BD2003B26D2 /* iosAppUITests */,
+				8A51DB6C2EF29A4900014350 /* Frameworks */,
 				8AA64BF02EF02BD1003B26D2 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -109,6 +163,7 @@
 				8AA64BEC2EF02BD1003B26D2 /* Frameworks */,
 				8AA64BED2EF02BD1003B26D2 /* Resources */,
 				8AA64C1A2EF02FC0003B26D2 /* ShellScript */,
+				8A51DB742EF29A9F00014350 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -426,7 +481,7 @@
 				DEVELOPMENT_TEAM = GL6V9BHUNP;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/Debug/iphonesimulator18.4/**";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -468,7 +523,7 @@
 				DEVELOPMENT_TEAM = GL6V9BHUNP;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks/Release/iphonesimulator18.4";
+				FRAMEWORK_SEARCH_PATHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

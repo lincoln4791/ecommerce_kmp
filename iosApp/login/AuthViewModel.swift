@@ -16,25 +16,32 @@ class AuthViewModel: ObservableObject {
         errorMessage = ""
         isLoading = true
 
-        Task {
-            let result = await controller.login(
-                email: email,
-                password: password
-            )
+        controller.login(email: email, password: password) { result, error in
+            DispatchQueue.main.async {
+                self.isLoading = false
 
-            isLoading = false
+                if let error = error {
+                    self.errorMessage = error.localizedDescription
+                    return
+                }
 
-            switch result {
+                guard let result = result else {
+                    self.errorMessage = "Unknown error"
+                    return
+                }
 
-            case let success as ResponseSuccess<LoginResponse>:
-                print("LOGIN DATA:", success.data)
-                isLoggedIn = true
+                switch result {
 
-            case let error as ResponseError:
-                errorMessage = error.message
+                case let success as LoginResultBase.Success:
+                    print("LOGIN DATA:", success.data)
+                    self.isLoggedIn = true
 
-            default:
-                errorMessage = "Unknown error"
+                case let error as LoginResultBase.Error:
+                    self.errorMessage = error.message
+
+                default:
+                    self.errorMessage = "Unknown error"
+                }
             }
         }
     }
