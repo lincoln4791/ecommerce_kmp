@@ -11,6 +11,7 @@ import SwiftUI
 struct HomeView: View {
     
     @ObservedObject var vm = AuthViewModel()
+    @Binding var path: NavigationPath
 
     var body: some View {
         VStack {
@@ -19,7 +20,8 @@ struct HomeView: View {
             
             Button("Logout") {
                 vm.logout()
-                vm.isLoggedIn = false
+                //vm.isLoggedIn = false
+                path.append(AppRoute.login)
             }
         }
         .padding()
