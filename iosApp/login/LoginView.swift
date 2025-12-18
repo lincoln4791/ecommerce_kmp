@@ -12,6 +12,7 @@ struct LoginView: View {
 
     @ObservedObject var vm: AuthViewModel
 
+
     var body: some View {
         VStack(spacing: 16) {
 
@@ -20,7 +21,22 @@ struct LoginView: View {
 
             TextField("Email", text: $vm.email)
                 .textFieldStyle(.roundedBorder)
+                .keyboardType(.emailAddress)
                 .autocapitalization(.none)
+                .onChange(of: vm.email) { _, _ in
+                    let isValid = vm.isValidEmail()
+                    if(!isValid){
+                        vm.emailError = "Invalid email format"
+                    }
+                    else{
+                        vm.emailError = ""
+                    }
+                }
+            if !vm.emailError.isEmpty {
+                Text(vm.emailError)
+                    .font(.caption)
+                    .foregroundColor(.red)
+            }
 
             SecureField("Password", text: $vm.password)
                 .textFieldStyle(.roundedBorder)
@@ -30,7 +46,11 @@ struct LoginView: View {
             }
 
             Button("Login") {
-                vm.login()
+                let isValid = vm.validateLoginRequest()
+                if(isValid){
+                    vm.login()
+                }
+                
             }
             .disabled(vm.isLoading)
 

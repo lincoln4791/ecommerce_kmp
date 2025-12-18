@@ -7,7 +7,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if vm.isLoggedIn {
-                HomeView()
+                HomeView(vm: vm)
             } else {
                 LoginView(vm: vm)
             }
