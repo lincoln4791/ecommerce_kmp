@@ -11,15 +11,18 @@ import sharedKit
 
 @main
 struct iosAppApp: App {
+
     init() {
         // 👇 This is where you start Koin
         InitKoinIosKt.doInitKoinIos();
         print("🔥 Koin iOS initialized")
     }
-
+    
+    @StateObject private var authVM = AuthViewModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView().environmentObject(authVM)
         }
     }
+    
 }

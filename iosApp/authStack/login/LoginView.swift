@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LoginView: View {
 
-    @ObservedObject var vm: AuthViewModel
+    @EnvironmentObject var authVM: AuthViewModel
     @Binding var path: NavigationPath
 
 
@@ -35,21 +35,21 @@ struct LoginView: View {
                     Text("Login")
                         .font(.largeTitle)
 
-                    TextField("Email", text: $vm.email)
+                    TextField("Email", text: $authVM.email)
                         .keyboardType(.emailAddress)
                         .autocapitalization(.none)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(10)
 
-                    SecureField("Password", text: $vm.password)
+                    SecureField("Password", text: $authVM.password)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(10)
 
                     Button {
-                        if vm.validateLoginRequest() {
-                            vm.login()
+                        if authVM.validateLoginRequest() {
+                            authVM.login()
                             //path.append(AppRoute.home)
                         }
                     } label: {

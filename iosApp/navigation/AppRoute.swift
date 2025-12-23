@@ -8,8 +8,17 @@
 
 enum AppRoute: Hashable {
     case login
-    case home
-    case profile
-    case settings
     case register
+    case profile
+    
+    case home
+    
+    case products
+    case productDetail(Int)
+    case ordewrProduct(Int)
+    
+    case orders
+    case orderDetails(Int)
+    
+    case saleReport
 }

@@ -1,0 +1,26 @@
+//
+//  HomeViewModel.swift
+//  iosApp
+//
+//  Created by Mahmudul Karim Lincoln on 23/12/25.
+//
+
+import SwiftUI
+class HomeViewModel: ObservableObject {
+
+    let mainCardItems: [HomeMainCardModel] = [
+        HomeMainCardModel(id: 1, title: "Market", image: "cart.fill.badge.plus"),
+        HomeMainCardModel(id: 2, title: "Orders", image: "cart.fill"),
+        HomeMainCardModel(id: 3, title: "Profile", image: "person.fill"),
+        HomeMainCardModel(id: 4, title: "Wallet", image: "creditcard.fill"),
+        HomeMainCardModel(id: 5, title: "Help", image: "questionmark.circle"),
+        HomeMainCardModel(id: 6, title: "Logout", image: "power")
+    ]
+    
+    let sliderItems: [HomeSliderModel] = [
+        HomeSliderModel(id: 1, image: "1"),
+        HomeSliderModel(id: 2, image: "2"),
+        HomeSliderModel(id: 3, image: "3"),
+    ]
+    
+}
