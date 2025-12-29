@@ -9,4 +9,5 @@ struct HomeMainCardModel: Identifiable {
     var id: Int
     var title: String
     var image: String
+    var route: HomeRoute
 }

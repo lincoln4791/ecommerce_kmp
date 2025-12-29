@@ -15,12 +15,12 @@ struct HomeView: View {
     @Binding var path: NavigationPath
     
     private let columns = [
-           GridItem(.flexible()),
-           GridItem(.flexible()),
-           GridItem(.flexible())
-       ]
+        GridItem(.flexible()),
+        GridItem(.flexible()),
+        GridItem(.flexible())
+    ]
     
-
+    
     var body: some View {
         VStack() {
             HStack(){
@@ -32,7 +32,9 @@ struct HomeView: View {
             
             LazyVGrid(columns: columns) {
                 ForEach(homeVM.mainCardItems) { item in
-                    HomeCardView(title: "\((item.title))", image: "\((item.image))")
+                    HomeCardView(title: "\((item.title))", image: "\((item.image))").onTapGesture {
+                        path.append(item.route)
+                    }
                 }
             }
             Spacer().frame(height:20)
@@ -42,7 +44,7 @@ struct HomeView: View {
             Button("Logout") {
                 authVM.logout()
                 authVM.isLoggedIn = false
-            
+                
             }
         }
         .padding()

@@ -24,7 +24,7 @@ class AuthViewModel: ObservableObject {
         UserSessionProvider.shared.userSession
     }()
 
-    private let controller = AuthController()
+    private let controller = AuthController(userSession: UserSessionProvider.shared.userSession)
     
     func isUserLoggedIn() -> Bool {
         return userSession.isLoggedIn()
@@ -37,7 +37,6 @@ class AuthViewModel: ObservableObject {
     }
     
     func logout(){
-
         userSession.logout()
     }
 
@@ -60,11 +59,11 @@ class AuthViewModel: ObservableObject {
                 }
 
                 switch result {
-                case let success as LoginResultBase.Success:
+                case let success as LoginResponseBase.Success:
                     self.userSession.saveUser(userInfo: success.data.data!)
                     self.isLoggedIn = true
 
-                case let error as LoginResultBase.Error:
+                case let error as LoginResponseBase.Error:
                     self.errorMessage = error.error.toUiMessage()
 
                 default:

@@ -9,12 +9,12 @@ import SwiftUI
 class HomeViewModel: ObservableObject {
 
     let mainCardItems: [HomeMainCardModel] = [
-        HomeMainCardModel(id: 1, title: "Market", image: "cart.fill.badge.plus"),
-        HomeMainCardModel(id: 2, title: "Orders", image: "cart.fill"),
-        HomeMainCardModel(id: 3, title: "Profile", image: "person.fill"),
-        HomeMainCardModel(id: 4, title: "Wallet", image: "creditcard.fill"),
-        HomeMainCardModel(id: 5, title: "Help", image: "questionmark.circle"),
-        HomeMainCardModel(id: 6, title: "Logout", image: "power")
+        HomeMainCardModel(id: 1, title: "Market", image: "cart.fill.badge.plus",route:.allProducts),
+        HomeMainCardModel(id: 2, title: "My Cart", image: "cart.fill",route:.cart),
+        HomeMainCardModel(id: 3, title: "Profile", image: "person.fill",route:.allProducts),
+        HomeMainCardModel(id: 4, title: "Wallet", image: "creditcard.fill",route:.allProducts),
+        HomeMainCardModel(id: 5, title: "Help", image: "questionmark.circle",route:.allProducts),
+        HomeMainCardModel(id: 6, title: "Logout", image: "power",route:.allProducts)
     ]
     
     let sliderItems: [HomeSliderModel] = [
