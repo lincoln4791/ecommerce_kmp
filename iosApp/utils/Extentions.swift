@@ -15,3 +15,16 @@ extension Double {
         return formatter.string(from: NSNumber(value: self)) ?? "৳ 0.00"
     }
 }
+
+extension View {
+    func cardStyle() -> some View {
+        self
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color(.systemBackground))
+                    .shadow(color: .black.opacity(0.05), radius: 8)
+            )
+    }
+}
+

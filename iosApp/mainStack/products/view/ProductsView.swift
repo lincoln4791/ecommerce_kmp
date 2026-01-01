@@ -56,13 +56,7 @@ struct ProductsView: View {
         }
         .overlay {
             if viewModel.isLoading {
-                ZStack {
-                    Color.black.opacity(0.1).ignoresSafeArea()
-                    ProgressView("Loading products...")
-                        .padding(24)
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(12)
-                }
+                LoaderOverlay(text: "Products loading..." )
             }
         }
         

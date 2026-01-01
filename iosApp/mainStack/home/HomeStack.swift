@@ -27,8 +27,11 @@ struct HomeStack: View {
                     case .cart:
                         CartsView(path: $path)
                         
-                    case .orders:
-                        ProductsView(path: $path)
+                    case .orderHiostory:
+                        OrderHistoryView(path: $path)
+                        
+                    case .orderDetails(let order):
+                        OrderHistoryDetailsView(path: $path,order: order)
            
 
                     }
@@ -41,5 +44,6 @@ enum HomeRoute: Hashable {
     case allProducts
     case productDetails(product:ProductUiModel)
     case cart
-    case orders
+    case orderHiostory
+    case orderDetails(orderItemUiModel : MyOrderDataUiModel)
 }

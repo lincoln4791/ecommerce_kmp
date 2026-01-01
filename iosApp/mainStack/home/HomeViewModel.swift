@@ -11,7 +11,7 @@ class HomeViewModel: ObservableObject {
     let mainCardItems: [HomeMainCardModel] = [
         HomeMainCardModel(id: 1, title: "Market", image: "cart.fill.badge.plus",route:.allProducts),
         HomeMainCardModel(id: 2, title: "My Cart", image: "cart.fill",route:.cart),
-        HomeMainCardModel(id: 3, title: "Profile", image: "person.fill",route:.allProducts),
+        HomeMainCardModel(id: 3, title: "My Orders", image: "purchased.circle.fill",route:.orderHiostory),
         HomeMainCardModel(id: 4, title: "Wallet", image: "creditcard.fill",route:.allProducts),
         HomeMainCardModel(id: 5, title: "Help", image: "questionmark.circle",route:.allProducts),
         HomeMainCardModel(id: 6, title: "Logout", image: "power",route:.allProducts)

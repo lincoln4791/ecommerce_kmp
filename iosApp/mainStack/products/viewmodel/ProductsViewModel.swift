@@ -22,26 +22,25 @@ class ProductsViewModel: ObservableObject {
 
     // 🔹 Derived lists (for filter UI)
     var brands: [String] {
-        Array(Set(products.compactMap { $0.brandName })).sorted()
+        Array(Set(products.compactMap { $0.model.brand.name })).sorted()
     }
 
     var categories: [String] {
-        Array(Set(products.compactMap { $0.categoryName })).sorted()
+        Array(Set(products.compactMap { $0.category.name })).sorted()
     }
 
     // 🔹 Filtered products (THIS is what UI uses)
     var filteredProducts: [ProductUiModel] {
         products.filter { product in
             let brandMatch =
-                selectedBrand == nil || product.brandName == selectedBrand
+            selectedBrand == nil || product.model.brand.name == selectedBrand
 
             let categoryMatch =
-                selectedCategory == nil || product.categoryName == selectedCategory
+            selectedCategory == nil || product.category.name == selectedCategory
             
             let searchMatch =
                            searchQuery.isEmpty ||
-                           (product.name?
-                               .localizedCaseInsensitiveContains(searchQuery) == true)
+                           (product.name.localizedCaseInsensitiveContains(searchQuery) == true)
 
             return brandMatch && categoryMatch && searchMatch
         }
@@ -74,7 +73,7 @@ class ProductsViewModel: ObservableObject {
 
                 if let success = result as? GetProductsResponseBase.Success {
                     let items = success.data.data
-                    self.products = ProductMapper.mapProductsUiModel(items : items!.items)
+                    self.products = ProductMapper.mapProductsUiModelFromProductsDataItemList(items : items!.items)
                     return
                 }
 

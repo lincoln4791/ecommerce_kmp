@@ -152,24 +152,6 @@ class CartViewModel: ObservableObject {
             }
         }
 
-
-        //let items = KotlinMutableList<CartBulkUpdateItem>()
-        //items.add(item1)
-        //items.add(item2)
-
-        //let request = CartBulkUpdateRequest(items: items)
-
-
-//        controller.updateQuantity(
-//            productId: Int32(item.productId),
-//            quantity: Int32(quantity)
-//        ) { _, error in
-//            if let error {
-//                DispatchQueue.main.async {
-//                    self.errorMessage = error.localizedDescription
-//                }
-//            }
-//        }
     }
 
     // MARK: - Remove item (still immediate)
@@ -188,10 +170,5 @@ class CartViewModel: ObservableObject {
     }
     
 }
-//
-//  CartViewModel.swift
-//  iosApp
-//
-//  Created by Mahmudul Karim Lincoln on 28/12/25.
-//
+
 
