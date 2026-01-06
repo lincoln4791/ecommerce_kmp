@@ -10,7 +10,7 @@ import sharedKit
 @MainActor
 class ProductsViewModel: ObservableObject {
     
-    @Published var errorMessage = ""
+    @Published var errorMessage : String? = nil
     @Published var isLoading = false
     @Published var products: [ProductUiModel] = []
     
@@ -54,7 +54,6 @@ class ProductsViewModel: ObservableObject {
     
     
     func getProducts() {
-        errorMessage = ""
         isLoading = true
 
         controller.getProducts { (result: GetProductsResponseBase?, error: Error?) in

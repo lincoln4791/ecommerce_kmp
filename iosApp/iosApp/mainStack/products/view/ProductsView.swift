@@ -4,6 +4,8 @@ struct ProductsView: View {
 
     @StateObject var viewModel = ProductsViewModel()
     @Binding var path: NavigationPath
+    @State private var showToast = false
+    @State private var toastMessage : String? = ""
 
     private let columns = [
         GridItem(.flexible()),
@@ -12,15 +14,6 @@ struct ProductsView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-
-            // 🔹 Top loading bar
-//            if viewModel.isLoading {
-//                ProgressView()
-//                    .progressViewStyle(.linear)
-//                    .padding(.horizontal)
-//                    .padding(.top, 4)
-//            }
-
             ProductFilterBarWidget(viewModel: viewModel)
                 .padding(.top, viewModel.isLoading ? 8 : 0)
 
@@ -59,6 +52,13 @@ struct ProductsView: View {
                 LoaderOverlay(text: "Products loading..." )
             }
         }
+        .onReceive(viewModel.$errorMessage) { message in
+            if let message, !message.isEmpty {
+                toastMessage = message
+                showToast = true
+            }
+        }
+        .errorAlert(errorMessage: toastMessage, isShow: $showToast)
         
     }
 }

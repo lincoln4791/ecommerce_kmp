@@ -9,7 +9,7 @@ import SwiftUI
 import sharedKit
 @MainActor
 class OrderViewModel: ObservableObject {
-    @Published var errorMessage = ""
+    @Published var errorMessage : String?
     @Published var myOrderItems: [MyOrderDataUiModel] = []
     @Published var placeOrderState: UiState<Void> = .idle
     @Published var getMyOrderState: UiState<Void> = .loading
@@ -39,7 +39,6 @@ class OrderViewModel: ObservableObject {
                 switch result {
                 case let success as PlaceOrderFromCartResponseBase.Success:
                 
-                    self.errorMessage = "Success"
                     self.placeOrderState = .success(())
                     
 
@@ -55,18 +54,19 @@ class OrderViewModel: ObservableObject {
     }
     
     func getOrders() {
-        errorMessage = ""
         getMyOrderState = .loading
 
         controller.getMyOrders(){ result, error in
             DispatchQueue.main.async {
                 if let error = error {
                     self.getMyOrderState = .error("error")
+                    self.errorMessage = "error"
                     return
                 }
 
                 guard let result = result else {
                     self.getMyOrderState = .error("error")
+                    self.errorMessage = "error"
                     return
                 }
 
@@ -83,9 +83,11 @@ class OrderViewModel: ObservableObject {
 
                 case let error as GetMyOrdersResponseBase.Error:
                     self.getMyOrderState = .error(error.error.toUiMessage())
+                    self.errorMessage = error.error.toUiMessage()
 
                 default:
                     self.errorMessage = "Unknown error"
+                    self.getMyOrderState = .error("Unknown Error")
                 }
             }
         }
