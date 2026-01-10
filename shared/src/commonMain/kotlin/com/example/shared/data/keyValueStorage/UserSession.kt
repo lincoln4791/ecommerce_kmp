@@ -1,6 +1,7 @@
 package com.example.shared.data.keyValueStorage
 
 import com.example.shared.data.model.responses.auth.LoginData
+import kotlinx.coroutines.flow.MutableStateFlow
 
 class UserSession(
     private val jsonStorage: JsonStorage
@@ -38,10 +39,12 @@ class UserSession(
     fun isLoggedIn(): Boolean {
         return getUser() != null
     }
+    val isLoggedInState = MutableStateFlow(isLoggedIn())
 
     fun logout() {
         jsonStorage.remove(StorageKeys.USER_INFO)
         jsonStorage.remove(StorageKeys.TOKEN)
+        isLoggedInState.value = false
         //jsonStorage.clear()
     }
 }

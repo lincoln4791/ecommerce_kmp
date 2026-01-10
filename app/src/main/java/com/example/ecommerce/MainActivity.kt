@@ -6,40 +6,25 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.ecommerce.navigation.MainScreen
+import androidx.navigation.compose.rememberNavController
 import com.example.ecommerce.ui.theme.EcommerceTheme
+import com.example.ecommerce.navigation.RootNavHost
+import com.example.shared.data.keyValueStorage.UserSession
+import org.koin.android.ext.android.inject
 
 class MainActivity : ComponentActivity() {
+    private val userSession: UserSession by inject()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
+            val navController = rememberNavController()
             EcommerceTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { _ ->
-                    //LoginScreen()
-                    MainScreen()
+                    RootNavHost(navController, userSession)
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    EcommerceTheme {
-        Greeting("Android")
     }
 }

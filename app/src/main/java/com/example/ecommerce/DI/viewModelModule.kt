@@ -1,16 +1,11 @@
 package com.example.ecommerce.DI
 
-import com.example.ecommerce.ui.theme.cart.CartViewModel
-import com.example.ecommerce.ui.theme.home.HomeViewModel
-import com.example.ecommerce.ui.theme.login.LoginViewModel
-import com.example.ecommerce.ui.theme.order.OrderViewModel
-import com.example.ecommerce.ui.theme.products.ProductViewModel
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel {
-        LoginViewModel(
+        _root_ide_package_.com.example.ecommerce.ui.views.login.LoginViewModel(
             authController = get(),
             userSession = get()
         )
@@ -18,7 +13,7 @@ val viewModelModule = module {
 
     //Home
     viewModel {
-        HomeViewModel(
+        _root_ide_package_.com.example.ecommerce.ui.views.home.HomeViewModel(
             authController = get(),
             userSession = get()
         )
@@ -26,19 +21,19 @@ val viewModelModule = module {
 
     //products
     viewModel {
-        ProductViewModel(
+        _root_ide_package_.com.example.ecommerce.ui.views.products.ProductViewModel(
             productController = get(),
         )
     }
 
     viewModel {
-        CartViewModel(
+        _root_ide_package_.com.example.ecommerce.ui.views.cart.CartViewModel(
             cartController = get(),
         )
     }
 
     viewModel {
-        OrderViewModel(
+        _root_ide_package_.com.example.ecommerce.ui.views.order.OrderViewModel(
             orderController = get(),
         )
     }
