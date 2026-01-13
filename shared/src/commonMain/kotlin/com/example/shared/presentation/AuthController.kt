@@ -12,7 +12,7 @@ import com.example.shared.domain.usecase.auth.RefreshTokenUseCase
 import com.example.shared.domain.usecase.auth.RegisterUseCase
 
 class AuthController(
-    private val userSession: UserSession
+    private val userSession: UserSession,
 ) {
 
     private val apiClient = ApiClient(userSession)
