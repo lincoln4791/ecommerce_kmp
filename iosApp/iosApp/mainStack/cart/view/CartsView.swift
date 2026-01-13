@@ -17,7 +17,7 @@ struct CartsView: View {
             }
             
             if viewModel.cartItems.isEmpty {
-                Text(viewModel.errorMessage ?? "No items in cart")
+                Text(viewModel.errorMessage ?? "")
             }
             
             else {

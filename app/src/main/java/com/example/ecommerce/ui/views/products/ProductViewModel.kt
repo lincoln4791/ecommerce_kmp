@@ -44,9 +44,6 @@ class ProductViewModel(
         _uiState.update { it.copy(selectedBrand = brand) }
     }
 
-    // -------------------------
-    // Derived State (Filters)
-    // -------------------------
     val filteredProducts: StateFlow<List<ProductsDataItem>> =
         combine(
             uiState.map { it.products },

@@ -69,7 +69,12 @@ class CartViewModel: ObservableObject {
                 switch result {
                 case let success as GetCartResponseBase.Success:
                     self.cartItems = CartMapper.mapToCartItemsUiModel(items: success.data.data!)
-                    self.errorMessage = nil
+                    if(self.cartItems.isEmpty){
+                        self.errorMessage = "Cart Is Empty"
+                    }
+                    else{
+                        self.errorMessage = nil
+                    }
 
                 case let error as GetCartResponseBase.Error:
                     self.errorMessage = error.error.toUiMessage()
