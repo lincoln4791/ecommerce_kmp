@@ -15,7 +15,7 @@ class CartViewModel: ObservableObject {
     @Published var cartItems: [CartDataUiModel] = []
     private var updateQuantityTask: Task<Void, Never>?
 
-    private let controller = CartController(userSession: UserSessionProvider.shared.userSession)
+    private let controller = ControllerProvider.shared.getCartController()
  
     func addToCart(addToCartRequest:AddToCartRequest) {
         isLoading = true

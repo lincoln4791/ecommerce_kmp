@@ -14,7 +14,7 @@ class OrderViewModel: ObservableObject {
     @Published var placeOrderState: UiState<Void> = .idle
     @Published var getMyOrderState: UiState<Void> = .loading
 
-    private let controller = OrderController(userSession: UserSessionProvider.shared.userSession)
+    private let controller = ControllerProvider.shared.getOrderController()
     
     func placeOrderFromCart() {
         errorMessage = ""

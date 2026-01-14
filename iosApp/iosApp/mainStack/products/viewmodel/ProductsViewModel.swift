@@ -46,7 +46,7 @@ class ProductsViewModel: ObservableObject {
         }
     }
     
-    private let controller = ProductController(userSession: UserSessionProvider.shared.userSession)
+    private let controller = ControllerProvider.shared.getProductsController()
     
     init(){
         getProducts()

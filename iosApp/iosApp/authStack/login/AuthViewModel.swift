@@ -24,7 +24,7 @@ class AuthViewModel: ObservableObject {
         UserSessionProvider.shared.userSession
     }()
 
-    private let controller = AuthController(userSession: UserSessionProvider.shared.userSession)
+    private let controller = ControllerProvider.shared.getAuthController()
     
     func isUserLoggedIn() -> Bool {
         return userSession.isLoggedIn()
