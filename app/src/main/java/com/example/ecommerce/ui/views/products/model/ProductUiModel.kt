@@ -36,6 +36,52 @@ data class ProductUiModel(
                 productStatus = productDataItem.productStatus
             )
         }
+        fun getDemoProductsList() : List<ProductUiModel>{
+            return listOf(
+                ProductUiModel(
+                    id = 1,
+                    name = "iPhone 15 Pro",
+                    price = 1499.99,
+                    stock = 12,
+                    model = ProductModelUiModel.getDemoData(),
+                    category = CategoryUiModel.getDemoData(),
+                    displayPrice = "$1,499.99",
+                    rating = 4.7f,
+                    ratingCount = 3421,
+                    imageUrl = null, // keep null for preview-safe
+                    isInStock = true,
+                    productStatus = "Available"
+                ),
+                ProductUiModel(
+                    id = 2,
+                    name = "iPhone 14 Pro",
+                    price = 1399.99,
+                    stock = 14,
+                    model = ProductModelUiModel.getDemoData(),
+                    category = CategoryUiModel.getDemoData(),
+                    displayPrice = "$1,399.99",
+                    rating = 4.7f,
+                    ratingCount = 2421,
+                    imageUrl = null, // keep null for preview-safe
+                    isInStock = true,
+                    productStatus = "Available"
+                ),
+                ProductUiModel(
+                    id = 3,
+                    name = "iPhone 15 Pro",
+                    price = 1299.99,
+                    stock = 13,
+                    model = ProductModelUiModel.getDemoData(),
+                    category = CategoryUiModel.getDemoData(),
+                    displayPrice = "$1,299.99",
+                    rating = 4.7f,
+                    ratingCount = 4121,
+                    imageUrl = null, // keep null for preview-safe
+                    isInStock = true,
+                    productStatus = "Available"
+                )
+            )
+        }
     }
 }
 

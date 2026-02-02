@@ -17,6 +17,15 @@ data class ProductModelUiModel(
                 BrandUiModel.fromBrand(productModel.brand)
             )
         }
+
+        fun getDemoData() : ProductModelUiModel{
+            return ProductModelUiModel(
+                id = 101,
+                name = "iPhone 15 Pro Max",
+                description = "Apple’s flagship smartphone with A17 Pro chip and titanium design.",
+                brand = BrandUiModel.getDemoData()
+            )
+        }
     }
 }
 

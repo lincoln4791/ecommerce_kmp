@@ -29,13 +29,13 @@ kotlin {
 
     val baseNameValue = "sharedKit"
     //val xcfName = "sharedKit"
-    //val xcf = XCFramework(xcfName)
+    val xcf = XCFramework(baseNameValue)
 
     iosX64 {
         binaries.framework {
             baseName = baseNameValue
             isStatic = true
-            //xcf.add(this)
+            xcf.add(this)
         }
     }
 
@@ -43,7 +43,7 @@ kotlin {
         binaries.framework {
             baseName = baseNameValue
             isStatic = true
-            //xcf.add(this)
+            xcf.add(this)
         }
     }
 
@@ -51,7 +51,7 @@ kotlin {
         binaries.framework {
             baseName = baseNameValue
             isStatic = true
-            //xcf.add(this)
+            xcf.add(this)
         }
     }
 

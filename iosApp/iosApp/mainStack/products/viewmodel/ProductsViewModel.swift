@@ -84,7 +84,5 @@ class ProductsViewModel: ObservableObject {
                 self.errorMessage = "Unknown error"
             }
         }
-        
-        
     }
 }

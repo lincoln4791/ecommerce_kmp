@@ -15,6 +15,14 @@ data class BrandUiModel(
                 brand.description
             )
         }
+
+        fun getDemoData() : BrandUiModel {
+            return BrandUiModel(
+                id = 1,
+                name = "Apple",
+                description = "this is demo desc"
+            )
+        }
     }
 }
 

@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -44,13 +45,14 @@ class ProductViewModel(
         _uiState.update { it.copy(selectedBrand = brand) }
     }
 
-    val filteredProducts: StateFlow<List<ProductsDataItem>> =
+    val filteredProducts =
         combine(
             uiState.map { it.products },
             uiState.map { it.searchQuery },
             uiState.map { it.selectedCategory },
             uiState.map { it.selectedBrand }
-        ) { products, search, category, brand ->
+        )
+        { products, search, category, brand ->
 
             products.filter { product ->
 

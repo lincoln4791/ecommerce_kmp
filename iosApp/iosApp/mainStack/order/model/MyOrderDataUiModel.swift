@@ -41,7 +41,7 @@ struct MyOrderItemUiModel: Identifiable, Codable, Hashable {
 
 extension MyOrderItemUiModel {
 
-    static func fromOrderItem(orderItem: OrderItem) -> MyOrderItemUiModel {
+    static func fromOrderItem(orderItem: OrderDataItem) -> MyOrderItemUiModel {
         MyOrderItemUiModel(
             id: Int(orderItem.id),
             product: ProductUiModel.fromProductDataItem(productItem: orderItem.product),

@@ -8,6 +8,8 @@ sealed class MainScreens(val route: String, val title:String) {
 
     object Delivery : MainScreens("delivery","Delivery")
     object Products : MainScreens("products","Products")
+    object Cart : MainScreens("cart","Cart")
+    object OrderHistory : MainScreens("order_history","Order History")
 
     object Profile : MainScreens("profile/{userId}","Profile") {
         fun createRoute(userId: String) = "profile/$userId"
@@ -19,6 +21,8 @@ sealed class MainScreens(val route: String, val title:String) {
             Delivery,
             //Home,
             Products,
+            Cart,
+            OrderHistory,
             Profile
         )
 

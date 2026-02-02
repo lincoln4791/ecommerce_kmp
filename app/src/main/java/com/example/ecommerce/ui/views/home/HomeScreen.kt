@@ -25,6 +25,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.ecommerce.R
@@ -46,9 +47,7 @@ fun HomeScreen(
     orderViewModel: OrderViewModel = koinViewModel(),
 ) {
     val bannerImages = listOf(
-        R.drawable.one,
-        R.drawable.two,
-        R.drawable.three
+        R.drawable.one, R.drawable.two, R.drawable.three
     )
     val context = LocalContext.current
     LaunchedEffect(Unit) {
@@ -57,9 +56,7 @@ fun HomeScreen(
                 when (event) {
                     is UiEvent.ShowToast -> {
                         Toast.makeText(
-                            context,
-                            event.message,
-                            Toast.LENGTH_SHORT
+                            context, event.message, Toast.LENGTH_SHORT
                         ).show()
                     }
 
@@ -79,9 +76,7 @@ fun HomeScreen(
                 when (event) {
                     is UiEvent.ShowToast -> {
                         Toast.makeText(
-                            context,
-                            event.message,
-                            Toast.LENGTH_SHORT
+                            context, event.message, Toast.LENGTH_SHORT
                         ).show()
                     }
 
@@ -102,13 +97,28 @@ fun HomeScreen(
 
     val menuItems = listOf(
         HomeMenuItem("Market", Icons.Default.Star, MainScreens.Products.route),
-        HomeMenuItem("My Cart", Icons.Default.ShoppingCart,MainScreens.Products.route),
-        HomeMenuItem("My Orders", Icons.Default.Favorite,MainScreens.Products.route),
-        HomeMenuItem("Profile", Icons.Default.Person,MainScreens.Products.route),
-        HomeMenuItem("Help", Icons.Default.Settings,MainScreens.Products.route),
-        HomeMenuItem("Logout", Icons.Default.ExitToApp,MainScreens.Products.route)
+        HomeMenuItem("My Cart", Icons.Default.ShoppingCart, MainScreens.Cart.route),
+        HomeMenuItem("My Orders", Icons.Default.Favorite, MainScreens.OrderHistory.route),
+        HomeMenuItem("Profile", Icons.Default.Person, MainScreens.Products.route),
+        HomeMenuItem("Help", Icons.Default.Settings, MainScreens.Products.route),
+        HomeMenuItem("Logout", Icons.Default.ExitToApp, MainScreens.Products.route)
     )
 
+    HomeScreenUi(menuItems,bannerImages, onClick = {it->
+        navController.navigate(it.path)
+    }, onLogoutClick = {
+        viewModel.logout()
+    })
+
+}
+
+@Composable
+fun HomeScreenUi(
+    menuItems: List<HomeMenuItem>,
+    bannerImages: List<Int>,
+    onClick: (menuItem: HomeMenuItem) -> Unit,
+    onLogoutClick: () -> Unit,
+) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -131,8 +141,9 @@ fun HomeScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
         ) {
             items(menuItems) { item ->
-                HomeMenuCard(item){
-                    navController.navigate(item.path)
+                HomeMenuCard(item) {
+                    onClick(item)
+                    //navController.navigate(item.path)
                 }
             }
         }
@@ -142,41 +153,29 @@ fun HomeScreen(
         // Bottom banner image
         SlidingBanner(images = bannerImages)
         Button(onClick = {
-            viewModel.logout()
+            onLogoutClick()
+            //viewModel.logout()
         }) {
             Text(text = "Logout")
         }
     }
+}
 
-/*    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.Center
+@Composable
+@Preview(showBackground = true)
+fun HomeScreenPreview(){
+    val menuItems = listOf(
+        HomeMenuItem("Market", Icons.Default.Star, MainScreens.Products.route),
+        HomeMenuItem("My Cart", Icons.Default.ShoppingCart, MainScreens.Cart.route),
+        HomeMenuItem("My Orders", Icons.Default.Favorite, MainScreens.OrderHistory.route),
+        HomeMenuItem("Profile", Icons.Default.Person, MainScreens.Products.route),
+        HomeMenuItem("Help", Icons.Default.Settings, MainScreens.Products.route),
+        HomeMenuItem("Logout", Icons.Default.ExitToApp, MainScreens.Products.route)
     )
-    {
-
-        Text("Home Page")
-        Button(onClick = {
-            viewModel.logout()
-        }) {
-            Text(text = "Logout")
-        }
-
-        Button(onClick = {
-            //cartViewModel.addToCart()
-            //cartViewModel.getCart()
-            //cartViewModel.cartBulkUpdate()
-            //orderViewModel.orderFromCart()
-            orderViewModel.getMyOrders()
-        }) {
-            Text(text = "Add To Cart")
-        }
-
-        Button(onClick = {
-            navController.navigate(Screens.Products.route)
-        }) {
-            Text("navigate")
-        }
-    }*/
+    val bannerImages = listOf(
+        R.drawable.one, R.drawable.two, R.drawable.three
+    )
+    HomeScreenUi(
+        menuItems,bannerImages,{},{}
+    )
 }

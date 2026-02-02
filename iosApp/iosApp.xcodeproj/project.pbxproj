@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A1D21272F17BC8F005F38CB /* sharedKit.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1D21242F17BC70005F38CB /* sharedKit.xcframework */; };
+		8A1D21282F17BC8F005F38CB /* sharedKit.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8A1D21242F17BC70005F38CB /* sharedKit.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8AA64C292EF03A75003B26D2 /* KmpFix.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8AA64C282EF03A75003B26D2 /* KmpFix.xcconfig */; };
 /* End PBXBuildFile section */
 
@@ -27,7 +29,22 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		8A1D21292F17BC8F005F38CB /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				8A1D21282F17BC8F005F38CB /* sharedKit.xcframework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		8A1D21242F17BC70005F38CB /* sharedKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = sharedKit.xcframework; sourceTree = "<group>"; };
 		8A51DB6D2EF29A4900014350 /* sharedKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = sharedKit.xcframework; sourceTree = "<group>"; };
 		8A51DB6F2EF29A4900014350 /* sharedKit.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; path = sharedKit.xcframework; sourceTree = "<group>"; };
 		8AA64BEF2EF02BD1003B26D2 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -59,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A1D21272F17BC8F005F38CB /* sharedKit.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,9 +97,27 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8A1D21252F17BC70005F38CB /* release */ = {
+			isa = PBXGroup;
+			children = (
+				8A1D21242F17BC70005F38CB /* sharedKit.xcframework */,
+			);
+			path = release;
+			sourceTree = "<group>";
+		};
+		8A1D21262F17BC70005F38CB /* XCFrameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8A1D21252F17BC70005F38CB /* release */,
+			);
+			name = XCFrameworks;
+			path = ../shared/build/XCFrameworks;
+			sourceTree = "<group>";
+		};
 		8A51DB6C2EF29A4900014350 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8A1D21262F17BC70005F38CB /* XCFrameworks */,
 				8A51DB712EF29A4900014350 /* XCFrameworks */,
 			);
 			name = Frameworks;
@@ -146,6 +182,7 @@
 				8AA64BEC2EF02BD1003B26D2 /* Frameworks */,
 				8AA64BED2EF02BD1003B26D2 /* Resources */,
 				8AA64C1A2EF02FC0003B26D2 /* Run Script */,
+				8A1D21292F17BC8F005F38CB /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -441,7 +478,7 @@
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/bin/**/debugFramework";
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/XCFrameworks/release/**";
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -514,10 +551,7 @@
 				DEVELOPMENT_TEAM = GL6V9BHUNP;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(SRCROOT)/../shared/build/bin/iosSimulatorArm64/releaseFramework/**",
-					"$(SRCROOT)/../shared/build/bin/iosArm64/releaseFramework/**",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/XCFrameworks/release/**";
 				GENERATE_INFOPLIST_FILE = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;

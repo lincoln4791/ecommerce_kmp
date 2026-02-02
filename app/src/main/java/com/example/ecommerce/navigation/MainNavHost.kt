@@ -5,9 +5,11 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.ecommerce.ui.views.cart.CartScreen
 import com.example.ecommerce.ui.views.delivery.DeliveryScreen
 import com.example.ecommerce.ui.views.feed.FeedScreen
 import com.example.ecommerce.ui.views.home.HomeScreen
+import com.example.ecommerce.ui.views.order.OrdersScreen
 import com.example.ecommerce.ui.views.products.ProductsScreen
 
 @Composable
@@ -18,6 +20,12 @@ fun MainNavHost(navHostController: NavHostController, modifier: Modifier = Modif
         }
         composable(MainScreens.Products.route) {
             ProductsScreen(navHostController)
+        }
+        composable(MainScreens.Cart.route) {
+            CartScreen(navHostController)
+        }
+        composable(MainScreens.OrderHistory.route) {
+            OrdersScreen(navHostController)
         }
         composable(MainScreens.Feed.route) {
             FeedScreen(navHostController)

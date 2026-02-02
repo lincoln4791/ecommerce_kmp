@@ -144,7 +144,7 @@ fun MainScreen(
                                         contentDescription = screen.title
                                     )*/
                                 },
-                                label = { Text(screen.route.capitalize()) }
+                                label = { Text(screen.title) }
                             )
                         }
                     }

@@ -16,6 +16,13 @@ data class CategoryUiModel(
                 category.description
             )
         }
+        fun getDemoData(): CategoryUiModel{
+            return CategoryUiModel(
+                id = 1,
+                name = "Phones",
+                description = "this is demo desc."
+            )
+        }
     }
 }
 

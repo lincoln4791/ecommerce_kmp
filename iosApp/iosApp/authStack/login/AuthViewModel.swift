@@ -12,23 +12,39 @@ class AuthViewModel: ObservableObject {
     @Published var errorMessage = ""
     @Published var isLoggedIn = false
     
+
+
+    private let userSession: UserSession = UserSessionProvider.shared.userSession
+
+    private let scope = IosCoroutinesKt.createMainScope()
+    private let observer: UserSessionObserver
+
+    private let controller = ControllerProvider.shared.getAuthController()
+
+
     init(){
-        isLoggedIn = isUserLoggedIn()
+        self.isLoggedIn = userSession.isLoggedIn()
+        self.observer = UserSessionObserver(userSession: userSession)
+        
+        observer.observeLoginState(
+                    scope: scope
+                ) { [weak self] loggedIn in
+                
+                    if(loggedIn.boolValue == false){
+                        self?.logout()
+                        self?.isLoggedIn = loggedIn.boolValue
+                    }
+         
+                 
+                }
+        
 #if DEBUG
         email = "test@mail.com"
         password = "12345678"
 #endif
     }
-
-    lazy var userSession: UserSession = {
-        UserSessionProvider.shared.userSession
-    }()
-
-    private let controller = ControllerProvider.shared.getAuthController()
     
-    func isUserLoggedIn() -> Bool {
-        return userSession.isLoggedIn()
-    }
+
     
     func getUser()-> LoginData?{
         let userData = userSession.getUser()

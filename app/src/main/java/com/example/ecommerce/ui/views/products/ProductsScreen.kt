@@ -19,9 +19,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.ecommerce.ui.views.products.components.ProductListWidget
 import com.example.ecommerce.ui.views.products.components.ProductsDropdownWidget
 import com.example.ecommerce.ui.views.products.model.ProductUiModel
@@ -29,7 +31,7 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProductsScreen(
-    navController: NavController,
+    navController: NavHostController,
     viewModel: ProductViewModel = koinViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -37,15 +39,42 @@ fun ProductsScreen(
     val categories by viewModel.categories.collectAsStateWithLifecycle()
     val brands by viewModel.brands.collectAsStateWithLifecycle()
 
-    Column(
-        Modifier.padding(12.dp)
-    ) {
+    ProductsScreenUi(
+        isLoading = uiState.isLoading,
+        searchQuery = uiState.searchQuery,
+        products = products.map { ProductUiModel.fromProductDataItem(it) },
+        categories = categories,
+        brands = brands,
+        selectedCategory = uiState.selectedCategory,
+        selectedBrand = uiState.selectedBrand,
+        onSearchQueryChange = viewModel::onSearchQueryChange,
+        onCategorySelected = viewModel::onCategorySelected,
+        onBrandSelected = viewModel::onBrandSelected,
+        onItemClick = { /* navigate */ },
+        onAddToCart = { /* add */ }
+    )
+}
 
-        if (uiState.isLoading) {
+@Composable
+fun ProductsScreenUi(
+    isLoading: Boolean,
+    searchQuery: String,
+    products: List<ProductUiModel>,
+    categories: List<String>,
+    brands: List<String>,
+    selectedCategory: String?,
+    selectedBrand: String?,
+    onSearchQueryChange: (String) -> Unit,
+    onCategorySelected: (String?) -> Unit,
+    onBrandSelected: (String?) -> Unit,
+    onItemClick: (ProductUiModel) -> Unit,
+    onAddToCart: (ProductUiModel) -> Unit
+) {
+    Column(Modifier.padding(12.dp)) {
+
+        if (isLoading) {
             Box(
-                modifier = Modifier
-                    .fillMaxSize(),
-                    //.background(Color.Black.copy(alpha = 0.3f)),
+                modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator(color = Color.Gray)
@@ -59,10 +88,9 @@ fun ProductsScreen(
                 .padding(12.dp)
         ) {
 
-            // 🔍 Search bar
             OutlinedTextField(
-                value = uiState.searchQuery,
-                onValueChange = viewModel::onSearchQueryChange,
+                value = searchQuery,
+                onValueChange = onSearchQueryChange,
                 modifier = Modifier.fillMaxWidth(),
                 placeholder = { Text("Search products") },
                 singleLine = true
@@ -70,36 +98,53 @@ fun ProductsScreen(
 
             Spacer(Modifier.height(8.dp))
 
-            Row(
-                Modifier.fillMaxWidth()
-            ) {
-                // 🏷 Category dropdown
+            Row(Modifier.fillMaxWidth()) {
+
                 ProductsDropdownWidget(
                     label = "Category",
                     items = categories,
-                    selectedItem = uiState.selectedCategory,
-                    onItemSelected = viewModel::onCategorySelected,
-                    onClear = { viewModel.onCategorySelected(null) },
+                    selectedItem = selectedCategory,
+                    onItemSelected = onCategorySelected,
+                    onClear = { onCategorySelected(null) },
                     modifier = Modifier.weight(1f)
                 )
 
                 Spacer(Modifier.width(8.dp))
 
-                // 🏭 Brand dropdown
                 ProductsDropdownWidget(
                     label = "Brand",
                     items = brands,
-                    selectedItem = uiState.selectedBrand,
-                    onItemSelected = viewModel::onBrandSelected,
-                    onClear = { viewModel.onBrandSelected(null) },
+                    selectedItem = selectedBrand,
+                    onItemSelected = onBrandSelected,
+                    onClear = { onBrandSelected(null) },
                     modifier = Modifier.weight(1f)
                 )
             }
-
         }
 
         ProductListWidget(
-            products = products.map { ProductUiModel.fromProductDataItem(it) }.toList(),
+            products = products,
+            onItemClick = onItemClick,
+            onAddToCart = onAddToCart
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ProductsScreenPreview() {
+    MaterialTheme {
+        ProductsScreenUi(
+            isLoading = false,
+            searchQuery = "iPhone",
+            products = ProductUiModel.getDemoProductsList(),
+            categories = listOf("Phones", "Laptops", "Accessories"),
+            brands = listOf("Apple", "Samsung", "Xiaomi"),
+            selectedCategory = "Phones",
+            selectedBrand = "Apple",
+            onSearchQueryChange = {},
+            onCategorySelected = {},
+            onBrandSelected = {},
             onItemClick = {},
             onAddToCart = {}
         )
