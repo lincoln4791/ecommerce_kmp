@@ -1,5 +1,6 @@
 package com.example.ecommerce.ui.views.home
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -36,6 +38,7 @@ import com.example.ecommerce.ui.views.home.widgets.HomeMenuCard
 import com.example.ecommerce.ui.views.home.widgets.SlidingBanner
 import com.example.ecommerce.ui.views.order.OrderViewModel
 import com.example.ecommerce.utils.UiEvent
+import com.example.shared.DemoState
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -50,8 +53,24 @@ fun HomeScreen(
         R.drawable.one, R.drawable.two, R.drawable.three
     )
     val context = LocalContext.current
+
+    val demoState = remember { DemoState() }
+
     LaunchedEffect(Unit) {
         launch {
+            demoState.startTimer()
+        }
+
+        launch {
+            demoState.count.collect {
+                Log.d("tag", "ggwp: $it")
+            }
+        }
+    }
+
+    LaunchedEffect(Unit) {
+        launch {
+
             viewModel.uiEvent.collect { event ->
                 when (event) {
                     is UiEvent.ShowToast -> {

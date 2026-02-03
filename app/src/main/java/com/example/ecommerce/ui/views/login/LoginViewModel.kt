@@ -56,7 +56,7 @@ class LoginViewModel(
                         userSession.saveUser(response.data.data!!)
                         _uiEvent.send(UiEvent.ShowToast("Login success"))
                         //_uiEvent.send(UiEvent.NavigateTo(MainScreens.Home))
-                        userSession.isLoggedInState.value=true
+                        userSession.loginState()
                     }
                     else{
                         _uiEvent.send(UiEvent.ShowToast("error"))

@@ -10,6 +10,13 @@ import sharedKit
 @MainActor
 class ProductsViewModel: ObservableObject {
     
+    
+    @Published var flag = 1
+
+    private let scope = IosCoroutinesKt.createMainScope()
+    private let demoState = DemoState()
+    
+    
     @Published var errorMessage : String? = nil
     @Published var isLoading = false
     @Published var products: [ProductUiModel] = []
@@ -50,7 +57,31 @@ class ProductsViewModel: ObservableObject {
     
     init(){
         getProducts()
+
+
+//        let observer = DemoStateObserver(demoState: demoState)
+//
+//               observer.observe(
+//                   scope: scope
+//               ) { [weak self] value in
+//                   self?.flag = value.intValue
+//                   print("gg")
+//               }
+//                Task {
+//                    do {
+//                        try await demoState.startTimer()
+//                    } catch {
+//                        print("startTimer failed: \(error)")
+//                    }
+//        }
+               
+     
+        
     }
+    
+//    deinit {
+//            scope.cancel()
+//        }
     
     
     func getProducts() {

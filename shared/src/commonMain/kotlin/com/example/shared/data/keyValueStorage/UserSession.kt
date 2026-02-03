@@ -44,7 +44,14 @@ class UserSession(
     fun logout() {
         jsonStorage.remove(StorageKeys.USER_INFO)
         jsonStorage.remove(StorageKeys.TOKEN)
-        isLoggedInState.value = false
+        logoutState()
         //jsonStorage.clear()
+    }
+
+    fun loginState() {
+        isLoggedInState.value = true
+    }
+    fun logoutState() {
+        isLoggedInState.value = false
     }
 }

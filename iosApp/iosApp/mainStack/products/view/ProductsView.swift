@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ProductsView: View {
-
+    @EnvironmentObject var authVM : AuthViewModel
     @StateObject var viewModel = ProductsViewModel()
     @Binding var path: NavigationPath
     @State private var showToast = false

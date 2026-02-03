@@ -4,7 +4,7 @@ import sharedKit
 
 @MainActor
 class AuthViewModel: ObservableObject {
-
+    @Published var flag = 1
     @Published var email = ""
     @Published var emailError = ""
     @Published var password = ""
@@ -17,26 +17,44 @@ class AuthViewModel: ObservableObject {
     private let userSession: UserSession = UserSessionProvider.shared.userSession
 
     private let scope = IosCoroutinesKt.createMainScope()
-    private let observer: UserSessionObserver
+    private let demoState = DemoState()
 
     private let controller = ControllerProvider.shared.getAuthController()
 
 
     init(){
         self.isLoggedIn = userSession.isLoggedIn()
-        self.observer = UserSessionObserver(userSession: userSession)
         
-        observer.observeLoginState(
-                    scope: scope
-                ) { [weak self] loggedIn in
-                
-                    if(loggedIn.boolValue == false){
-                        self?.logout()
-                        self?.isLoggedIn = loggedIn.boolValue
-                    }
-         
-                 
-                }
+//        let observer = DemoStateObserver(demoState: demoState)
+//
+//               observer.observe(
+//                   scope: scope
+//               ) { [weak self] value in
+//                   guard let self = self else { return }
+//
+//                   self.flag = value.intValue
+//                   print("flag -> \(self.flag)")
+//                       if self.flag > 80 {
+//                           //self.logout()
+//                           //self.isLoggedIn = false
+//                       }
+//               }
+//                Task {
+//                    do {
+//                        try await demoState.startTimer()
+//                    } catch {
+//                        print("startTimer failed: \(error)")
+//                    }
+//        }
+        
+        let loginObserver = UserSessionObserver(userSession: userSession)
+        loginObserver.observeLoginState(scope : scope) { [weak self] (loggedIn : KotlinBoolean)  in
+            guard let self = self else { return }
+            print("logi observed")
+            if(loggedIn.boolValue==false){
+                self.isLoggedIn = false
+            }
+        }
         
 #if DEBUG
         email = "test@mail.com"
@@ -77,6 +95,7 @@ class AuthViewModel: ObservableObject {
                 switch result {
                 case let success as LoginResponseBase.Success:
                     self.userSession.saveUser(userInfo: success.data.data!)
+                    self.userSession.loginState()
                     self.isLoggedIn = true
 
                 case let error as LoginResponseBase.Error:
