@@ -1,10 +1,9 @@
 package com.example.shared.utils
 
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
 import com.example.shared.data.keyValueStorage.UserSession
 
-class UserSessionObserver(
+class UserLoginStateObserver(
     private val userSession: UserSession
 ) {
     fun observeLoginState(
