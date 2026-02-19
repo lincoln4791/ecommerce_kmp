@@ -10,15 +10,14 @@ import sharedKit
 @MainActor
 class CartViewModel: ObservableObject {
     
-    @Published var errorMessage = ""
+    @Published var errorMessage : String?
     @Published var isLoading = false
     @Published var cartItems: [CartDataUiModel] = []
     private var updateQuantityTask: Task<Void, Never>?
 
-    private let controller = CartController(userSession: UserSessionProvider.shared.userSession)
+    private let controller = ControllerProvider.shared.getCartController()
  
     func addToCart(addToCartRequest:AddToCartRequest) {
-        errorMessage = ""
         isLoading = true
 
         controller.addToCart(addToCartRequest: addToCartRequest, ){ result, error in
@@ -37,8 +36,7 @@ class CartViewModel: ObservableObject {
 
                 switch result {
                 case let success as AddToCartResponseBase.Success:
-                    self.errorMessage = "Success"
-                    
+                    self.errorMessage = nil
 
                 case let error as AddToCartResponseBase.Error:
                     self.errorMessage = error.error.toUiMessage()
@@ -52,15 +50,14 @@ class CartViewModel: ObservableObject {
     
     
     func getCart() {
-        errorMessage = ""
         isLoading = true
-
         controller.getCart(){ result, error in
             DispatchQueue.main.async {
                 self.isLoading = false
 
                 if let error = error {
                     self.errorMessage = error.localizedDescription
+
                     return
                 }
 
@@ -71,8 +68,13 @@ class CartViewModel: ObservableObject {
 
                 switch result {
                 case let success as GetCartResponseBase.Success:
-                    self.errorMessage = "Success"
                     self.cartItems = CartMapper.mapToCartItemsUiModel(items: success.data.data!)
+                    if(self.cartItems.isEmpty){
+                        self.errorMessage = "Cart Is Empty"
+                    }
+                    else{
+                        self.errorMessage = nil
+                    }
 
                 case let error as GetCartResponseBase.Error:
                     self.errorMessage = error.error.toUiMessage()

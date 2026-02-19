@@ -4,7 +4,7 @@ import sharedKit
 
 @MainActor
 class AuthViewModel: ObservableObject {
-
+    @Published var flag = 1
     @Published var email = ""
     @Published var emailError = ""
     @Published var password = ""
@@ -12,23 +12,38 @@ class AuthViewModel: ObservableObject {
     @Published var errorMessage = ""
     @Published var isLoggedIn = false
     
+
+
+    private let userSession: UserSession = UserSessionProvider.shared.userSession
+
+    private let scope = IosCoroutinesKt.createMainScope()
+    private let demoState = DemoState()
+
+    private let controller = ControllerProvider.shared.getAuthController()
+
+
     init(){
-        isLoggedIn = isUserLoggedIn()
+        self.isLoggedIn = userSession.isLoggedIn()
+        
+        let loginObserver = UserLoginStateObserver(userSession: userSession)
+        loginObserver.observeLoginState(scope : scope) { [weak self] (loggedIn : KotlinBoolean)  in
+            guard let self = self else { return }
+            print("logi observed")
+            if(loggedIn.boolValue==false){
+                self.isLoggedIn = false
+            }
+            else{
+                self.isLoggedIn = true
+            }
+        }
+        
 #if DEBUG
         email = "test@mail.com"
         password = "12345678"
 #endif
     }
-
-    lazy var userSession: UserSession = {
-        UserSessionProvider.shared.userSession
-    }()
-
-    private let controller = AuthController(userSession: UserSessionProvider.shared.userSession)
     
-    func isUserLoggedIn() -> Bool {
-        return userSession.isLoggedIn()
-    }
+
     
     func getUser()-> LoginData?{
         let userData = userSession.getUser()
@@ -61,7 +76,7 @@ class AuthViewModel: ObservableObject {
                 switch result {
                 case let success as LoginResponseBase.Success:
                     self.userSession.saveUser(userInfo: success.data.data!)
-                    self.isLoggedIn = true
+                    self.userSession.loginState()
 
                 case let error as LoginResponseBase.Error:
                     self.errorMessage = error.error.toUiMessage()

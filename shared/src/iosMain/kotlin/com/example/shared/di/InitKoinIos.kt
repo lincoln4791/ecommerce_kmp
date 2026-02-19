@@ -4,6 +4,6 @@ import org.koin.core.context.startKoin
 
 fun initKoinIos() {
     startKoin {
-        modules(sharedModule,iosModule)
+        modules(sharedModule,sharedControllerModule,sharedRepositoryModule,iosModule)
     }
 }

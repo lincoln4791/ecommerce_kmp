@@ -10,7 +10,14 @@ import sharedKit
 @MainActor
 class ProductsViewModel: ObservableObject {
     
-    @Published var errorMessage = ""
+    
+    @Published var flag = 1
+
+    private let scope = IosCoroutinesKt.createMainScope()
+    private let demoState = DemoState()
+    
+    
+    @Published var errorMessage : String? = nil
     @Published var isLoading = false
     @Published var products: [ProductUiModel] = []
     
@@ -46,15 +53,38 @@ class ProductsViewModel: ObservableObject {
         }
     }
     
-    private let controller = ProductController(userSession: UserSessionProvider.shared.userSession)
+    private let controller = ControllerProvider.shared.getProductsController()
     
     init(){
         getProducts()
+
+
+//        let observer = DemoStateObserver(demoState: demoState)
+//
+//               observer.observe(
+//                   scope: scope
+//               ) { [weak self] value in
+//                   self?.flag = value.intValue
+//                   print("gg")
+//               }
+//                Task {
+//                    do {
+//                        try await demoState.startTimer()
+//                    } catch {
+//                        print("startTimer failed: \(error)")
+//                    }
+//        }
+               
+     
+        
     }
+    
+//    deinit {
+//            scope.cancel()
+//        }
     
     
     func getProducts() {
-        errorMessage = ""
         isLoading = true
 
         controller.getProducts { (result: GetProductsResponseBase?, error: Error?) in
@@ -85,7 +115,5 @@ class ProductsViewModel: ObservableObject {
                 self.errorMessage = "Unknown error"
             }
         }
-        
-        
     }
 }

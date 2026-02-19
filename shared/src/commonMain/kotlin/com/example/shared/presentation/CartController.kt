@@ -9,18 +9,14 @@ import com.example.shared.data.repository.CartRepositoryImpl
 import com.example.shared.domain.model.baseResultModels.cart.AddToCartResponseBase
 import com.example.shared.domain.model.baseResultModels.cart.CartBulkUpdateResponseBase
 import com.example.shared.domain.model.baseResultModels.cart.GetCartResponseBase
+import com.example.shared.domain.repository.CartRepository
 import com.example.shared.domain.usecase.cart.AddToCartUseCase
 import com.example.shared.domain.usecase.cart.CartBulkUpdateUseCase
 import com.example.shared.domain.usecase.cart.GetCartUseCase
 
 class CartController(
-    private val userSession: UserSession
+    repo: CartRepository
 ) {
-
-
-    private val apiClient = ApiClient(userSession)
-    private val api = EcommerceApi(apiClient)
-    private val repo = CartRepositoryImpl(api)
     private val addToCartUseCase = AddToCartUseCase(repo)
     private val getCartUseCase = GetCartUseCase(repo)
     private val cartBulkUpdateUseCase = CartBulkUpdateUseCase(repo)

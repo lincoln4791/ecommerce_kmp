@@ -14,13 +14,13 @@ data class PlaceOrderFromCartResponse(
 data class OrderData(
     val deliveryStatus: String,
     val id: Int,
-    val items: List<OrderItem>,
+    val items: List<OrderDataItem>,
     val paymentMethod: String,
     val totalAmount: Double,
     val userId: Int
 )
 @Serializable
-data class OrderItem(
+data class OrderDataItem(
     val id: Int,
     val price: Double,
     val product: ProductsDataItem,

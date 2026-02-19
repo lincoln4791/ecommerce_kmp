@@ -1,6 +1,7 @@
 package com.example.shared.data.api
 
 import com.example.shared.data.keyValueStorage.UserSession
+import com.example.shared.data.model.requests.RefreshTokenRequest
 import com.example.shared.data.model.responses.auth.RefreshTokenResponse
 import com.example.shared.log
 import io.github.aakira.napier.Napier
@@ -58,9 +59,11 @@ class ApiClient(
 
                     try {
                         val response: RefreshTokenResponse =
-                            client.post("/auth/refresh") {
+                            client.post("${EcommerceApi.baseUrl}/auth/refresh") {
+                                contentType(ContentType.Application.Json)
                                 setBody(
-                                    mapOf("refresh_token" to refreshToken)
+                                    RefreshTokenRequest(refreshToken)
+                                    //mapOf("refresh_token" to refreshToken)
                                 )
                             }.body()
 
@@ -74,6 +77,7 @@ class ApiClient(
                         )
 
                     } catch (e: Exception) {
+                        print(e)
                         userSession.logout()
                         null
                     }

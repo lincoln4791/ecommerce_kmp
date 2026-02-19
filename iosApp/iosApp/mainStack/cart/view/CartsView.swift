@@ -8,7 +8,7 @@ struct CartsView: View {
     @Binding var path: NavigationPath
     
     @State private var showToast = false
-    @State private var toastMessage = ""
+    @State private var toastMessage : String? = ""
 
     var body: some View {
         VStack {
@@ -17,7 +17,7 @@ struct CartsView: View {
             }
             
             if viewModel.cartItems.isEmpty {
-                Text(viewModel.errorMessage ?? "No items in cart")
+                Text(viewModel.errorMessage ?? "")
             }
             
             else {
@@ -56,16 +56,16 @@ struct CartsView: View {
                 }
             }
         }
-        .overlay(alignment: Alignment.bottom) {
-            if showToast {
-                ToastView(message: toastMessage)
-                    .padding(Edge.Set.bottom, 40)
-                    .transition(
-                        .move(edge: Edge.bottom)
-                            .combined(with: .opacity)
-                    )
-            }
-        }
+//        .overlay(alignment: Alignment.bottom) {
+//            if showToast {
+//                ToastView(message: toastMessage)
+//                    .padding(Edge.Set.bottom, 40)
+//                    .transition(
+//                        .move(edge: Edge.bottom)
+//                            .combined(with: .opacity)
+//                    )
+//            }
+//        }
         .onReceive(orderViewModel.$placeOrderState) { state in
             switch state {
             case .loading:
@@ -78,16 +78,23 @@ struct CartsView: View {
                 toastMessage = message.isEmpty ? "Something went wrong" : message
                 showToast = true
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    withAnimation {
-                        showToast = false
-                    }
-                }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+//                    withAnimation {
+//                        showToast = false
+//                    }
+//                }
 
             case .idle:
                 break
             }
         }
+        .onReceive(viewModel.$errorMessage) { message in
+            if let message, !message.isEmpty{
+                toastMessage = message
+                showToast = true
+            }
+        }
+        .errorAlert(errorMessage: toastMessage,isShow: $showToast)
         
     }
 }

@@ -14,7 +14,7 @@ class ProductDetailsViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var products: [ProductUiModel] = []
 
-    private let controller = CartController(userSession: UserSessionProvider.shared.userSession)
+    private let controller = ControllerProvider.shared.getCartController()
  
     func addToCart(addToCartRequest:AddToCartRequest) {
         errorMessage = ""

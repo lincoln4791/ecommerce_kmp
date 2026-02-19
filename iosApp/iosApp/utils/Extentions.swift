@@ -26,5 +26,20 @@ extension View {
                     .shadow(color: .black.opacity(0.05), radius: 8)
             )
     }
+    
+    func errorAlert(errorMessage: String?,isShow: Binding<Bool>) -> some View {
+        self.alert(
+            "Error",
+            isPresented: Binding(
+                get: { isShow.wrappedValue},
+                set: { _ in isShow.wrappedValue = true }
+            )
+        ) {
+            Button("OK") {}
+        } message: {
+            Text(errorMessage ?? "")
+        }
+    }
+    
 }
 

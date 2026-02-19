@@ -38,17 +38,26 @@ final class APIClient {
             throw APIError.invalidResponse
         }
 
+        #if DEBUG
         print("STATUS:", httpResponse.statusCode)
-        print(String(data: data, encoding: .utf8) ?? "")
+        print(String(data: data, encoding: .utf8) ?? "No body")
+        #endif
 
-        if httpResponse.statusCode == 401 {
+        switch httpResponse.statusCode {
+        case 200...299:
+            return data
+
+        case 401:
             throw APIError.unauthorized
-        }
 
-        guard 200..<300 ~= httpResponse.statusCode else {
-            throw APIError.invalidResponse
-        }
+        case 403:
+            throw APIError.forbidden
 
-        return data
+        case 500...599:
+            throw APIError.serverError(httpResponse.statusCode)
+
+        default:
+            throw APIError.unknown
+        }
     }
 }
