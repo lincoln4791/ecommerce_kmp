@@ -43,6 +43,10 @@ class LoginViewModel(
         return userSession.isLoggedIn()
     }
 
+    @Deprecated(
+        message = "Use loginV2()",
+        replaceWith = ReplaceWith("loginV2(email, password)")
+    )
     fun login(email: String, password: String) {
         viewModelScope.launch {
             isLoading = true
